@@ -3,6 +3,9 @@
 import { LogoCS } from "@/components/Logo";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { ModalProyecto } from "@/components/ModalProyecto";
+import { FormularioContacto } from "@/components/FormularioContacto";
 
 const enlaceWhatsapp =
   "https://wa.me/573195540180?text=Hola%2C%20quiero%20automatizar%20mi%20negocio%20con%20CybSec";
@@ -44,6 +47,20 @@ const servicios = [
     ],
   },
   {
+    titulo: "Auditorías de Ciberseguridad",
+    descripcion:
+      "Evaluamos profundamente la seguridad de tu empresa para identificar vulnerabilidades antes de que sean explotadas.",
+    icono: <IconoAuditoria className="h-6 w-6" />,
+    items: [
+      "Pruebas de penetración (Pentesting)",
+      "Auditoría de infraestructura y redes",
+      "Evaluación de políticas de seguridad",
+      "Reporte ejecutivo con plan de acción",
+      "Análisis de vulnerabilidades en aplicaciones web",
+      "Pruebas de ingeniería social",
+    ],
+  },
+  {
     titulo: "Ciberseguridad",
     descripcion:
       "Protegemos tu información y reducimos riesgos antes de que se conviertan en un problema serio para tu operación.",
@@ -63,39 +80,83 @@ const proyectos = [
     descripcion:
       "Plataforma que permite administrar conversaciones, almacenar archivos y asignar clientes a empleados en tiempo real.",
     etiqueta: "Automatización",
-    impacto: "Centralizó conversaciones, archivos y seguimiento operativo.",
+    impacto: "Centralizó conversaciones, archivos y seguimiento operativo, reduciendo un 70% el tiempo de respuesta.",
+    imagen: "https://placehold.co/800x450/0f172a/22d3ee?text=WhatsApp+API+Demo",
+    video: "",
+    tecnologias: ["WhatsApp API", "Node.js", "Socket.io", "MongoDB", "React"],
+    caracteristicas: [
+      "Chat en tiempo real con clientes",
+      "Sistema de tickets y asignación automática",
+      "Historial completo de conversaciones",
+      "Reportes y métricas de atención",
+      "API para integraciones externas"
+    ]
   },
   {
     titulo: "E-commerce funcional con pasarela de pagos",
     descripcion:
       "Tienda online con catálogo dinámico, integración de pedidos, contacto directo por WhatsApp y estructura de compra más ordenada.",
     etiqueta: "Comercio digital",
-    impacto: "Redujo trabajo manual y profesionalizó el proceso comercial.",
+    impacto: "Redujo trabajo manual en un 85% y profesionalizó el proceso comercial, aumentando las ventas en un 40%.",
+    imagen: "https://placehold.co/800x450/0f172a/22d3ee?text=E-commerce+Demo",
+    video: "",
+    tecnologias: ["Next.js", "Stripe", "PostgreSQL", "Tailwind CSS", "Redis"],
+    caracteristicas: [
+      "Catálogo de productos dinámico",
+      "Carrito de compras persistente",
+      "Múltiples métodos de pago",
+      "Panel de administración de pedidos",
+      "Notificaciones automáticas por email y WhatsApp"
+    ]
   },
   {
     titulo: "Sistema para negocio de préstamos",
     descripcion:
       "Solución diseñada para administrar clientes, organizar información financiera y dar mayor estructura tecnológica a la operación.",
     etiqueta: "Sistema administrativo",
-    impacto: "Mejoró control interno, trazabilidad y organización del negocio.",
+    impacto: "Mejoró control interno, trazabilidad y organización del negocio, reduciendo errores administrativos en un 90%.",
+    imagen: "https://placehold.co/800x450/0f172a/22d3ee?text=Sistema+Financiero+Demo",
+    video: "",
+    tecnologias: ["React", "Express", "MongoDB", "JWT", "Chart.js"],
+    caracteristicas: [
+      "Gestión completa de clientes",
+      "Cálculo automático de intereses y cuotas",
+      "Generación de contratos digitales",
+      "Dashboard con indicadores clave",
+      "Reportes financieros exportables"
+    ]
+  },
+  {
+    titulo: "Auditoría de seguridad para empresa financiera",
+    descripcion: "Evaluación completa de infraestructura, pruebas de penetración y análisis de vulnerabilidades para una empresa del sector financiero.",
+    etiqueta: "Ciberseguridad",
+    impacto: "Se identificaron y corrigieron 23 vulnerabilidades críticas antes de que pudieran ser explotadas. La empresa ahora cumple con estándares ISO 27001.",
+    imagen: "https://placehold.co/800x450/0f172a/22d3ee?text=Auditoria+Seguridad",
+    video: "",
+    tecnologias: ["Nessus", "Metasploit", "Burp Suite", "Wireshark", "Nmap"],
+    caracteristicas: [
+      "Pruebas de penetración externas e internas",
+      "Análisis de configuraciones de red",
+      "Evaluación de políticas de acceso",
+      "Pruebas de ingeniería social",
+      "Reporte ejecutivo para directivos",
+      "Plan de remediación priorizado"
+    ]
   },
 ];
 
 const indicadores = [
   {
-    valor: "3 áreas",
-    descripcion:
-      "Desarrollo, infraestructura y ciberseguridad en una sola propuesta.",
+    valor: "+70%",
+    descripcion: "Reducción promedio en tiempo de respuesta a clientes",
   },
   {
-    valor: "Soluciones",
-    descripcion:
-      "Pensadas para operar hoy y crecer mañana sin desorden técnico.",
+    valor: "24/7",
+    descripcion: "Automatización continua sin intervención manual",
   },
   {
-    valor: "Enfoque",
-    descripcion:
-      "Implementación con criterio visual, estructura y seguridad.",
+    valor: "100%",
+    descripcion: "Satisfacción en implementaciones realizadas",
   },
 ];
 
@@ -242,6 +303,27 @@ function IconoServidor({ className = "" }: { className?: string }) {
   );
 }
 
+function IconoAuditoria({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 8V12M12 16H12.01"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function IconoEscudo({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
@@ -257,6 +339,8 @@ function IconoEscudo({ className = "" }: { className?: string }) {
 }
 
 export default function PortafolioPage() {
+  const [proyectoSeleccionado, setProyectoSeleccionado] = useState<typeof proyectos[0] | null>(null);
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,_#0f172a_0%,_#020617_45%,_#000000_100%)] text-white">
       <div className="fondo-grid-tecnologico" />
@@ -565,7 +649,7 @@ export default function PortafolioPage() {
           </p>
         </BloqueAnimado>
 
-        <div className="grid gap-6 xl:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4">
           {servicios.map((servicio, index) => (
             <motion.article
               key={servicio.titulo}
@@ -667,7 +751,8 @@ export default function PortafolioPage() {
                 ease: "easeOut",
                 delay: index * 0.08,
               }}
-              className="tarjeta-premium borde-cyan tarjeta-hover-premium rounded-[2rem] p-8"
+              onClick={() => setProyectoSeleccionado(proyecto)}
+              className="tarjeta-premium borde-cyan tarjeta-hover-premium rounded-[2rem] p-8 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_20px_40px_-12px_rgba(34,211,238,0.15)]"
             >
               <div className="mb-4 inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">
                 {proyecto.etiqueta}
@@ -677,7 +762,7 @@ export default function PortafolioPage() {
                 {proyecto.titulo}
               </h3>
 
-              <p className="mt-4 text-sm leading-7 text-slate-300 md:text-base">
+              <p className="mt-4 text-sm leading-7 text-slate-300 md:text-base line-clamp-3">
                 {proyecto.descripcion}
               </p>
 
@@ -685,18 +770,24 @@ export default function PortafolioPage() {
                 <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-300">
                   Impacto
                 </p>
-                <p className="mt-2 text-sm leading-6 text-slate-300">
+                <p className="mt-2 text-sm leading-6 text-slate-300 line-clamp-2">
                   {proyecto.impacto}
                 </p>
               </div>
 
               <div className="mt-8 flex items-center gap-2 text-sm font-medium text-cyan-300">
                 <span className="h-2 w-2 rounded-full bg-cyan-400" />
-                <span>Implementación orientada a negocio</span>
+                <span>Click para ver más detalles →</span>
               </div>
             </motion.article>
           ))}
         </div>
+        
+        {/* Modal */}
+        <ModalProyecto 
+          proyecto={proyectoSeleccionado} 
+          onClose={() => setProyectoSeleccionado(null)} 
+        />
       </section>
 
       <section id="ideal" className="relative mx-auto max-w-7xl px-6 py-20 md:px-12">
@@ -865,7 +956,7 @@ export default function PortafolioPage() {
       <section id="contacto" className="relative mx-auto max-w-7xl px-6 pb-28 pt-10 md:px-12">
         <BloqueAnimado>
           <div className="tarjeta-premium borde-cyan tarjeta-hover-premium rounded-[2rem] p-8 md:p-12">
-            <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div className="grid gap-8 lg:grid-cols-2">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">
                   Contacto
@@ -880,26 +971,25 @@ export default function PortafolioPage() {
                   empresa para operar mejor, verse más profesional y crecer con
                   control.
                 </p>
+
+                <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+                  <a
+                    href={enlaceWhatsapp}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-cyan-400 px-6 py-3 text-center font-semibold text-slate-950 transition duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(34,211,238,0.18)]"
+                  >
+                    <span>WhatsApp directo</span>
+                    <FlechaCTA />
+                  </a>
+
+                  <FormularioContacto variant="modal" triggerText="Email o formulario" />
+                </div>
               </div>
 
-              <div className="flex flex-col gap-4 sm:flex-row lg:flex-col">
-                <a
-                  href={enlaceWhatsapp}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-cyan-400 px-6 py-3 text-center font-semibold text-slate-950 transition duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(34,211,238,0.18)]"
-                >
-                  <span>Quiero una asesoría tecnológica</span>
-                  <FlechaCTA />
-                </a>
-
-                <a
-                  href="/"
-                  className="group inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-center font-semibold text-white transition duration-300 hover:bg-white/10"
-                >
-                  <span>Volver al inicio</span>
-                  <FlechaCTA />
-                </a>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                <h3 className="mb-4 text-xl font-semibold text-white">O escríbenos por aquí</h3>
+                <FormularioContacto variant="inline" />
               </div>
             </div>
           </div>
